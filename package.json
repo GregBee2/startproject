@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/GregBee2/startproject#readme",
   "dependencies": {
-    "@xassist/xassist-array": "^1.0.1"
+    "@xassist/xassist-array": "^1.0.1",
+    "csv2readme": "^1.1.1",
+    "git-clone": "^0.1.0"
   }
 }

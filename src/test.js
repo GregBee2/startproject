@@ -1,41 +1,35 @@
-var csv2readme = require('./csv2readme.js');
-const definition = require("../package.json");
+var startproject = require('./startproject.js');
 
 var options={
-	input:{
-		base:"data/base.csv",
-		functionParam:"data/functionParameters.csv",
-		classDef:"data/classDefinition.csv"
-	},
-	moduleName:"xassist",
-	globalTOC:true,
-	baseURL:"https://github.com/GregBee2/",
-	header:{
-		title:"xassist",
-		explanation:["Several helper functions for Array's, objects, events, Dates, ..."].join("\r\n")
-	},
-	headerFiles:["src/installationModule.md"],
-	includeDependencies:true,
-	includeLicense:true,
-	footerFiles:[/*"dependencies.md","src/license.md"*/],
-	subTitle:"API",
-	output:{
-		file:"src/TOC.md"
-	},
-	baseLevel:3,
-	headerTemplates:{
-		moduleName:"xassist",
-		moduleUrl:"https://raw.githubusercontent.com/GregBee2/xassist/master/dist/xAssist.min.js",
-		libraryName:"xassist",
+	name:"@xassist/testProject",
+	folderName:"newTestProject",
+	mail:"gregory.beirens@gmail.com",
+	authorName:"Gregory Beirens",
+	/*git:"https://github.com/GregBee2/xassist-object.git",*/
+	
+	folders:["test",'folder1'],
+	files:[
+		{name:"test1.js",folder:"folder1",copyFrom:"src/csv2readme.config.template"},
+		{name:"test2.js",folder:"test",content:"test\r\nhello hopelijk lukt dit"},
+		{name:"test3.js",folder:"",templateFrom:"./package.template"},
+	],
+	testFunctions:["function1","function2"],
+	testFile:"main-test.js",
+	scripts2Run:[
+		
+		"echo 'test done'"	,
+		"npm -version"		
+	],
+	miscTemplates:{
+		description:"load csv files from remote and create csv files",
+		moduleTest:"csv()",
+		moduleName:'testProject',
+		libraryName:"@xassist",
 		libraryUrl:"https://github.com/GregBee2/xassist",
-		moduleTest:"version()"
-	},
-	footerTemplates:{
-		/*license:definition.license,
-		licenseUrl:"https://choosealicense.com/licenses/"+definition.license.toLowerCase()*/
+		keywords:JSON.stringify(["keyword1","keyWord2"])
 	}
 };
-csv2readme.init(options);
+startproject.init(options);
 
 	
 	

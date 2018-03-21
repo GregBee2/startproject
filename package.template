@@ -1,0 +1,42 @@
+{
+  "name": "${name}",
+  "version": "0.0.1",
+  "description": "${miscTemplates.description}",
+  "keywords":${miscTemplates.keywords},
+  "bugs": {
+    "email": "${mail}"
+  },
+  "license": "GPL-3.0",
+  "author": {
+		"name": "${authorName}",
+		"email": "${mail}"
+	},
+  "main": "dist/${miscTemplates.moduleName}.js",
+  "module": "index",
+  "scripts": {
+    "pretest": "rimraf dist  && rollup -c",
+    "test": "istanbul cover node_modules/tape/bin/tape test/**/*-test.js && eslint index.js src",
+    "posttest": "npm run uglify",
+    "build": "npm run test && git commit -am ",
+    "prepublishOnly": "npm version patch && npm run build  -- \"publish latest version\"",
+    "postpublish": "git push && git push --tags",
+	"readme":"node csv2readme.config.js",
+    "uglify": "uglifyjs  --comments /^@preserve/ dist/${miscTemplates.moduleName}.js -c -m -o dist/${miscTemplates.moduleName}.min.js"
+  },
+  "devDependencies": {
+    "csv2readme": "^1.0.1",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.56.3",
+    "tape": "^4.9.0"
+  },
+  "dependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+${git}"
+  },
+  "homepage": "${git}",
+  "directories": {
+    "test": "test"
+  }
+}
