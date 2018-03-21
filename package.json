@@ -1,0 +1,26 @@
+{
+  "name": "startproject",
+  "version": "1.0.0",
+  "description": "starts an empty project",
+  "main": "src/startproject.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GregBee2/startproject.git"
+  },
+  "keywords": [
+    "start",
+    "new project"
+  ],
+  "author": "gregory.beirens@gmail.com",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/GregBee2/startproject/issues"
+  },
+  "homepage": "https://github.com/GregBee2/startproject#readme",
+  "dependencies": {
+    "@xassist/xassist-array": "^1.0.1"
+  }
+}
