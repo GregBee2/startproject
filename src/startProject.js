@@ -94,7 +94,9 @@ function stopQueue(message,){
 
 function runScript(script,basePath){
 	console.log('executing script: '+script);
-	exec(script,{cwd:basePath,shell:true},function(err,stdout,stdin){
+	var cmds=script.split(" ");
+	script=(cmds[0]==="npm"?"npm.cmd":cmds[0])+" "+cmds.slice(1).join(" ");
+	var child=exec(script,{cwd:basePath,detached:true,stdio:'ignore'})/*,function(err,stdout,stdin){
 		 if (err) {
 			stopQueue("error executing script - code:"+err);
 		  }
@@ -104,25 +106,35 @@ function runScript(script,basePath){
 			  console.log("[[stdout]]: "+stdout) 
 			  runQueue();
 		  }
-	})
-	/*subprocess.stdout.on('data', (data) => {
+	})*/
+	
+	child.stdin.end();
+	child.stderr.on('data', (data) => {
+	  console.log(`stderr: ${data}`);
+	  stopQueue("error executing script - data:"+data);
+	  child.stdout.destroy();
+		child.stderr.destroy();
+		child.stdin.destroy();
+		//process.kill(child.pid);
+	});
+	child.stdout.on('data', (data) => {
 	  console.log(`stdout: ${data}`);
 	});
-	subprocess.stderr.on('data', (data) => {
-	  console.log(`stderr: ${data}`);
-	});
-	subprocess.on('close', function(exitcode) {
-		  if (exitcode!=0) {
+	child.on('exit', function(code) {
+		child.stdout.destroy();
+		child.stderr.destroy();
+		child.stdin.destroy();
+		//process.kill(child.pid);
+		console.log("ended");
+		if (code!=0) {
 			stopQueue("error executing script - code:"+exitcode);
-		  }
-		  else{
-			  runQueue();
-		  }
-	});
-	subprocess.on('error', (err) => {
-	 stopQueue("error executing script "+err.message);
-	});*/
-	
+		}
+		else{
+		  runQueue();
+		}
+		
+
+	})
 }
 function createFile(newFile){
 	fs.open(newFile, "wx", function (err, fd) {
