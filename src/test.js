@@ -15,10 +15,14 @@ var options={
 	],
 	testFunctions:["function1","function2"],
 	testFile:"main-test.js",
-	scripts2Run:[
+	postScripts:[
 		
-		"echo 'test done'"	,
-		"npm -version"		
+		"echo 'test done'",
+		"node -v",
+		"npm.cmd -version"		
+	],
+	preScripts:[
+		"echo 'starting script'"
 	],
 	miscTemplates:{
 		description:"load csv files from remote and create csv files",

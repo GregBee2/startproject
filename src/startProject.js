@@ -23,6 +23,11 @@ function template(text,obj,notfoundText){
 module.exports.init=function(options){
 
 	var basePath=path.join(process.cwd(),options.folderName||"");
+	if(options.preScripts){
+		options.preScripts.forEach(function(s){
+			queue.push(runScript.bind(null,s,process.cwd()));
+		});
+	}
 	if(options.git){
 		queue.push(cloneGIT.bind(null,options.git,basePath));
 	}
@@ -65,8 +70,8 @@ module.exports.init=function(options){
 		queue.push(createFile.bind(null,testFile));
 		queue.push(createtest.bind(null,testFile,options.testFunctions));
 	}
-	if(options.scripts2Run){
-		options.scripts2Run.forEach(function(s){
+	if(options.postScripts){
+		options.postScripts.forEach(function(s){
 			queue.push(runScript.bind(null,s,basePath));
 		});
 	}
@@ -89,12 +94,14 @@ function stopQueue(message,){
 
 function runScript(script,basePath){
 	console.log('executing script: '+script);
-	exec(script,{cwd:basePath},function(err,stdout,stdin){
+	exec(script,{cwd:basePath,shell:true},function(err,stdout,stdin){
 		 if (err) {
 			stopQueue("error executing script - code:"+err);
 		  }
 		  else{
 			  console.log('script executed: '+script);
+			  console.log("[[stdin]]: "+stdin) 
+			  console.log("[[stdout]]: "+stdout) 
 			  runQueue();
 		  }
 	})
