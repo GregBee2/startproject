@@ -109,14 +109,17 @@ function runScript(script,basePath){
 	})*/
 	
 	child.stdin.end();
-	child.stderr.on('data', (data) => {
+	/*child.stderr.on('data', (data) => {
 	  console.log(`stderr: ${data}`);
 	  stopQueue("error executing script - data:"+data);
 	  child.stdout.destroy();
-		child.stderr.destroy();
+		//child.stderr.destroy();
 		child.stdin.destroy();
 		//process.kill(child.pid);
-	});
+	});*/
+	child.on('error', function(err) {
+		stopQueue("error executing script "+script);
+	})
 	child.stdout.on('data', (data) => {
 	  console.log(`stdout: ${data}`);
 	});
@@ -127,7 +130,7 @@ function runScript(script,basePath){
 		//process.kill(child.pid);
 		console.log("ended");
 		if (code!=0) {
-			stopQueue("error executing script - code:"+exitcode);
+			stopQueue("error executing script - code:"+code);
 		}
 		else{
 		  runQueue();

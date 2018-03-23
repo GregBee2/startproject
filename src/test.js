@@ -19,7 +19,7 @@ var options={
 		
 		"echo 'test done'",
 		"node -v",
-		"npm.cmd -version"		
+		"npm install"
 	],
 	preScripts:[
 		"echo 'starting script'"
